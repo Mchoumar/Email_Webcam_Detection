@@ -89,7 +89,6 @@ while True:
 
         # calls the threads
         email_thread.start()
-        clean_thread.start()
 
     print(status_list)
 
@@ -103,3 +102,6 @@ while True:
 
 # deletes the video capture
 video.release()
+
+# cleans the images once the user quits the program
+clean_thread.start()

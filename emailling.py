@@ -16,7 +16,7 @@ def send_email(image):
     password = getenv("PASSWORD")
     receiver = "test"
 
-    # setup the email to be sent
+    # set up the email to be sent
     email_message = EmailMessage()
     email_message["Subject"] = "New customer showed up!"
     email_message.set_content("Hey, we just saw a new customer!")
