@@ -5,6 +5,8 @@ from email.message import EmailMessage
 
 
 def send_email(image):
+    print("send_email function started!")
+
     # setup for the port and host
     host = "smtp.gmail.com"
     port = 587
@@ -36,6 +38,8 @@ def send_email(image):
     gmail.sendmail(username, receiver, email_message.as_string())
     # quits the smtp protocol
     gmail.quit()
+
+    print("send_email function is done!")
 
 
 if __name__ == "__main__":

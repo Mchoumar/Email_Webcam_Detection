@@ -19,9 +19,13 @@ count = 1
 
 # cleans all images from the folder
 def clean_folder():
+    print("clean_folder function started!")
+
     images = glob("images/*.png")
 
     [remove(img) for img in images]
+
+    print("clean_folder function is done!")
 
 
 while True:
