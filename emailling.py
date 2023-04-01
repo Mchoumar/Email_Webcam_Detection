@@ -3,6 +3,7 @@ import smtplib as st
 from os import getenv
 from email.message import EmailMessage
 
+
 def send_email(image):
     # setup for the port and host
     host = "smtp.gmail.com"

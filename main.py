@@ -2,6 +2,8 @@ import cv2 as cv
 import time
 from emailling import send_email
 from glob import glob
+from os import remove
+from threading import Thread
 
 # start the video capture option
 video = cv.VideoCapture(0)
@@ -13,6 +15,14 @@ status_list = []
 
 # used for the number of images captured
 count = 1
+
+
+# cleans all images from the folder
+def clean_folder():
+    images = glob("images/*.png")
+
+    [remove(img) for img in images]
+
 
 while True:
     # resets the status of the object on every iteration
@@ -66,7 +76,17 @@ while True:
 
     # checks if an object is still in frame then sends an email if not
     if status_list[0] == 1 and status_list[1] == 0:
-        send_email(image)
+        # Thread execute and send email in the background to remove the lag
+        email_thread = Thread(target=send_email, args=(image,))
+        email_thread.daemon = True
+
+        clean_thread = Thread(target=clean_folder)
+        clean_thread.daemon = True
+
+        # calls the threads
+        email_thread.start()
+        clean_thread.start()
+
     print(status_list)
 
     # presents the colored normal frame
