@@ -1,6 +1,7 @@
 import cv2 as cv
 import time
 from emailling import send_email
+from glob import glob
 
 # start the video capture option
 video = cv.VideoCapture(0)
@@ -19,12 +20,6 @@ while True:
 
     # starts taking the video and checks if it is taking the video
     check, frame = video.read()
-
-    # stores images captured from the frame
-    cv.imwrite(f"images/{count}.png", frame)
-
-    # updates the number of images taken
-    count += 1
 
     # makes the frame to a gray color and then makes it blurry to be able to blur out the background
     gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
@@ -55,13 +50,23 @@ while True:
         if rect.any():
             status = 1
 
+            # stores images captured from the frame
+            cv.imwrite(f"images/{count}.png", frame)
+            # updates the number of images taken
+            count += 1
+
+            # stores all images in a list and chooses the one in the middle to send it
+            all_images = glob("images/*.png")
+            size = int(len(all_images)/2)
+            image = all_images[size]
+
     # stores the status of the object in a list to check if it is still in frame
     status_list.append(status)
     status_list = status_list[-2:]
 
     # checks if an object is still in frame then sends an email if not
     if status_list[0] == 1 and status_list[1] == 0:
-        send_email()
+        send_email(image)
     print(status_list)
 
     # presents the colored normal frame
