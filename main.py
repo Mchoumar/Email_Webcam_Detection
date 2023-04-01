@@ -52,10 +52,11 @@ while True:
     # makes sure that the object only is white
     dil_frame = cv.dilate(thresh_frame, None, iterations=2)
     cv.imshow("My video", dil_frame)
-
+    
+    # it is used to check the objects
     contours, check = cv.findContours(dil_frame, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 
-    # checks for objects and highlights them
+    # checks for objects and highlights the main object
     for contour in contours:
         if cv.contourArea(contour) < 5000:
             continue
